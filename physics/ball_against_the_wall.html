@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+	let ball = {
+		x:101,
+		y:100,
+		mass: 1,
+		ivel:0,
+		vel: 100,
+		acc: 0,
+		apply_force: function(force) {
+			this.acc = force / this.mass;
+		}
+	};
+	let canvas = null;
+	let ctx = null;
+	let updateRatio = 100;
+	function init() {
+		canvas = document.getElementById('canvas');
+		if (canvas.getContext){
+			ctx = canvas.getContext('2d');
+			draw_ball(ball, ctx)
+		}
+		update();
+	}
+	function draw_ball(ball, ctx){
+		ctx.beginPath();
+		ctx.arc(ball.x,ball.y,10,0,2*Math.PI);
+		ctx.stroke();
+	}
+	function update() {
+		window.setInterval(function() {
+			ctx.clearRect(0, 0, 1200, 400);
+			ball.x += ball.vel/100;
+			draw_ball(ball, ctx);
+		}, 10)
+	}
+	function test() {
+		let force = 100;
+		ball.apply_force(force);
+		ball.vel += ball.acc;
+	}
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="init();" onclick="test();">
+    <canvas id="canvas" width="1200" height="400"></canvas>
+  </body>
+</html

@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+      function draw(){
+        var canvas = document.getElementById('tutorial');
+        if (canvas.getContext){
+          var ctx = canvas.getContext('2d');
+          let width = 70
+          let height = 70
+          let pos_x = 10
+          let pos_y = 10
+          let down = true
+          window.setInterval(function(){
+          	/*
+          	let r =  Math.floor((Math.random() * 255) + 1);
+          	let g =  Math.floor((Math.random() * 255) + 1);
+          	let b =  Math.floor((Math.random() * 255) + 1);
+          	rgb_str = "rgb("+r+","+g+","+b+")"
+			ctx.fillStyle = rgb_str
+			ctx.fillRect (pos_x, pos_y, width,height);
+			if (down) {
+				pos_x += 5
+				pos_y += 5
+
+				if (pos_x >= 500 && pos_y >= 500) down = false
+			}
+			if(!down) {
+
+				pos_x -= 5
+				pos_y -= 5
+
+				if (pos_x < 0 && pos_y < 0) down = true	
+			}*/
+			styles = []
+			posxs  = []
+			posys  = []
+			for (let i = 0; i < 10; i++) {
+	          	let r =  Math.floor((Math.random() * 255) + 1);
+	          	let g =  Math.floor((Math.random() * 255) + 1);
+	          	let b =  Math.floor((Math.random() * 255) + 1);
+	          	rgb_str = "rgb("+r+","+g+","+b+")"
+	          	posx = Math.floor((Math.random() * 500) + 1);
+	          	posy = Math.floor((Math.random() * 500) + 1);
+
+	          	styles.push(rgb_str)
+	          	posxs.push(posx)
+	          	posys.push(posy)
+			}
+			draw_random(ctx, styles, posxs, posys, 10)
+          },1)
+        }
+      }
+
+      function draw_random(ctx, styles, posxs, posys,n) {
+      		ctx.clearRect(0, 0, 500, 500);
+      		for (let i = 0; i < n; i++) {
+				ctx.fillStyle = styles[i]
+				ctx.fillRect (posxs[i], posys[i], 30,30);
+			}
+      }
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="draw();">
+    <canvas id="tutorial" width="500" height="500"></canvas>
+  </body>
+</html
