@@ -5,18 +5,22 @@
 	let ball = {
 		x:101,
 		y:400-10,
-		mass: 2,
+		mass: 1,
 		ivel:0,
 		vel: 0,
+		vely:0,
 		acc: 0,
-		apply_force: function(force) {
-			this.acc = force / this.mass;
+		accy: 0,
+		apply_force: function(force, angle) {
+			this.acc = force * Math.cos(angle) / this.mass;
+			this.accy = force * Math.sin(angle) / this.mass;
+			console.log("accy = " +  Math.sin(angle))
 		}
 	};
 	let canvas = null;
 	let ctx = null;
 	let updateRatio = 100;
-	let frictionCoeff = 0.2;
+	let frictionCoeff = 0.5;
 	function init() {
 		canvas = document.getElementById('canvas');
 		if (canvas.getContext){
@@ -29,22 +33,38 @@
 		ctx.beginPath();
 		ctx.arc(ball.x,ball.y,10,0,2*Math.PI);
 		ctx.stroke();
+		ctx.fillStyle = "blue";
+		ctx.fill()
 	}
 	function update() {
 		window.setInterval(function() {
-			ctx.clearRect(0, 0, 1200, 400);
+			ctx.clearRect(0, 0, 20000, 400);
 			ball.x += ball.vel/100;
+			ball.y += ball.vely/100;
+			//console.log(ball.x)
 			if (ball.vel > 0) {
 				ball.vel += ball.acc/100;
-				ball.acc -= frictionCoeff * ball.mass;
+				if(ball.y >= 400-10){
+					ball.acc -= frictionCoeff * ball.mass;
+					console.log('haha')
+				}
+			}
+			if(ball.y < 400-10){
+				ball.accy += 9.8;
+				ball.vely += ball.accy/100;
+				console.log(ball.vely)
+			} else {
+				ball.y = 400-10;
 			}
 			draw_ball(ball, ctx);
-		}, 10)
+		}, 1)
 	}
 	function test() {
-		let force = 100;
-		ball.apply_force(force);
+		let force = 300;
+		ball.apply_force(force,30);
 		ball.vel += ball.acc;
+		ball.vely+= ball.accy;
+		console.log(ball.vel)
 	}
     </script>
     <style type="text/css">
@@ -52,6 +72,6 @@
     </style>
   </head>
   <body onload="init();" onclick="test();">
-    <canvas id="canvas" width="1200" height="400"></canvas>
+    <canvas id="canvas" width="20000" height="400"></canvas>
   </body>
 </html
