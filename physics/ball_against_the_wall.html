@@ -20,7 +20,7 @@
 	let canvas = null;
 	let ctx = null;
 	let updateRatio = 100;
-	let frictionCoeff = 0.5;
+	let frictionCoeff = 30;
 	function init() {
 		canvas = document.getElementById('canvas');
 		if (canvas.getContext){
@@ -39,11 +39,11 @@
 	function update() {
 		window.setInterval(function() {
 			ctx.clearRect(0, 0, 20000, 400);
-			ball.x += ball.vel/100;
-			ball.y += ball.vely/100;
+			ball.x += ball.vel/500;
+			ball.y += ball.vely/40;
 			//console.log(ball.x)
 			if (ball.vel > 0) {
-				ball.vel += ball.acc/100;
+				ball.vel += ball.acc/500;
 				if(ball.y >= 400-10){
 					ball.acc -= frictionCoeff * ball.mass;
 					console.log('haha')
@@ -51,17 +51,19 @@
 			}
 			if(ball.y < 400-10){
 				ball.accy += 9.8;
-				ball.vely += ball.accy/100;
+				ball.vely += ball.accy/25;
 				console.log(ball.vely)
 			} else {
 				ball.y = 400-10;
+				ball.vely = (-1) * ball.vely/7;
+				ball.accy = (-1) * ball.accy/7;
 			}
 			draw_ball(ball, ctx);
 		}, 1)
 	}
 	function test() {
 		let force = 300;
-		ball.apply_force(force,30);
+		ball.apply_force(force,-Math.PI/5);
 		ball.vel += ball.acc;
 		ball.vely+= ball.accy;
 		console.log(ball.vel)
