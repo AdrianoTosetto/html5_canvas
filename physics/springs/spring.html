@@ -1,0 +1,81 @@
+
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+    const canvasWidth = 500;
+    const canvasHeight = 500;
+
+    // helper function to draw the spring
+
+	function drawEllipse(context,centerX, centerY, width, height) {
+		
+		context.beginPath();
+		context.moveTo(centerX, centerY); // A1
+	  	context.bezierCurveTo(
+	    
+	    centerX, centerY - height/2, // C1
+	    centerX + width/2, centerY - height/2, // C2
+	    centerX + width/2, centerY); // A2
+		context.stroke()
+	 	context.closePath();
+	}
+	// helper function to draw the spring
+	function drawEllipse1(context,centerX, centerY, width, height) {
+		
+		context.beginPath();
+		context.moveTo(centerX, centerY); // A1
+	  	context.bezierCurveTo(
+	    
+	    centerX, centerY + height/2, // C1
+	    centerX + width/2, centerY + height/2, // C2
+	    centerX + width/2, centerY); // A2
+		context.stroke()
+	 	context.closePath();	
+	}
+
+    class Spring {
+    	constructor(size, k, x, y) {
+    		this.size = size; // tamanho da mola
+    		this.k = k; // constante elastica
+    		this.x = x;
+    		this.y = y;
+    	}
+
+    	draw(ctx,dist) {
+    		ctx.beginPath();
+    		//ctx.moveTo(this.x, this.y);
+			//for (let i = 0; i < this.size; i+=0.1) {
+			//	ctx.lineTo(i*10+this.x,(Math.cos(i)*10+this.y));
+			//	ctx.moveTo(i*10+this.x,(Math.cos(i)*10+this.y));
+			//	ctx.stroke();
+			//}
+
+			ctx.arc(0+this.x,this.y,dist,0,Math.PI);
+			ctx.stroke();
+			ctx.beginPath()
+			ctx.arc(0+this.x+38,this.y,dist,0,Math.PI);
+			ctx.stroke()
+		
+    	}
+    }
+
+	function init() {
+		canvas = document.getElementById('canvas');
+		if (canvas.getContext){
+			ctx = canvas.getContext('2d');
+			//spring = new Spring(100, 1, 300, 300);
+			//spring.draw(ctx,30)
+			drawEllipse(ctx, 300,300, 100, 100)
+			drawEllipse1(ctx, 300,300, 100, 100)
+		}
+	}
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="init();" onclick="test();">
+    <canvas id="canvas" width="20000" height="400"></canvas>
+  </body>
+</html
